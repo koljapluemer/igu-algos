@@ -1,0 +1,19 @@
+{
+    "topics": [
+        {
+            "id": "abc",
+            "name": "Sustainability"
+        },
+        {
+            "id": "def",
+            "name": "Ecosystems",
+            "feedsInto": ["abc"]
+        },
+        {
+            "id": "efg",
+            "name": "Forests",
+            "feedsInto": ["def"]
+        }
+
+    ]
+}
