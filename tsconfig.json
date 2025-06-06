@@ -5,7 +5,8 @@
     "moduleResolution": "bundler",
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "noEmit": true,
+    "declaration": true,
+    "outDir": "dist",
     "types": ["vitest/globals"]
   },
   "include": ["src", "tsup.config.ts", "vitest.config.ts"]

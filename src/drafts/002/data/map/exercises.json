@@ -1,0 +1,34 @@
+[
+  {
+    "id": "e1",
+    "belongsTo": "b",
+    "instruction": "$task_pre Barbados $task_post",
+    "type": "INSTRUCTION",
+
+    "data": {
+      "zoom": 100
+    }
+  },
+  {
+    "id": "e2",
+    "belongsTo": "c",
+    "instruction": "$task_pre Barbados $task_post",
+    "type": "INSTRUCTION",
+
+    "data": {
+      "zoom": 102,
+      "panField": 0
+    }
+  },
+  {
+    "id": "e3",
+    "belongsTo": "c",
+    "instruction": "$task_pre Barbados $task_post",
+    "type": "INSTRUCTION",
+
+    "data": {
+      "zoom": 102,
+      "panField": 1
+    }
+  }
+]

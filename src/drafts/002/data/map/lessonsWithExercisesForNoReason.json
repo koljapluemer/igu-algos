@@ -1,0 +1,25 @@
+[
+    {
+        "id": "a",
+        "name": "Know where Barbados is",
+        "exercises": {
+            "e1": {
+                "type": "INSTRUCTION",
+                "instruction": "$task_pre Barbados $task_post",
+                "data": {
+                    "zoom": 100
+                }
+            },
+            "e2": {
+                "type": "INSTRUCTION",
+                "instruction": "$task_pre Barbados $task_post",
+                "data": {
+                    "zoom": 102,
+                    "panField": 0
+                },
+                "blockedBy": ["e1"]
+            }
+        }
+
+    }
+]

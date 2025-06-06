@@ -1,7 +1,7 @@
 {
-  "name": "ts-fast-project",
-  "version": "0.0.0",
-  "description": "Boilerplate for building npm packages in TypeScript",
+  "name": "igu-algos",
+  "version": "0.0.1",
+  "description": "A bunch of learning algos",
   "author": "koljapluemer <github@koljapluemer.com>",
   "license": "MIT",
   "type": "module",

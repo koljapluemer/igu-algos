@@ -1,0 +1,24 @@
+[
+    {
+        "id": "a",
+        "name": "Learn 'جـَيي'",
+        "associatedLearningGoals": ["c", "d"],
+        "isLesson": true
+    },
+    {
+        "id": "b",
+        "name": "Learn ' حا َلاً َ'",
+        "associatedLearningGoals": ["d"]
+
+    },
+    {
+        "id": "c",
+        "name": "Learn Present Tense"
+    },
+    {
+        "id": "d",
+        "name": "Know 'أنا َ جـَيي حا َلاً َ'",
+        "associatedLearningGoals": ["c", "a", "b"],
+        "isLesson": true
+    }
+]
