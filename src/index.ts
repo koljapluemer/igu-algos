@@ -1,4 +1,4 @@
-import { add } from './add';
-import { subtract } from './subtract';
+import { Exercise } from './Exercise';
+import { Igu } from './Igu';
 
-export { add, subtract };
+export { Igu, Exercise };
