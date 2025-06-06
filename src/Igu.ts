@@ -1,4 +1,4 @@
-import { Exercise } from "./Exercise";
+import { Exercise } from "./types/exercises/Exercise";
 
     export class Igu {
 
@@ -33,4 +33,8 @@ import { Exercise } from "./Exercise";
             const randomIndex = Math.floor(Math.random() * this._exercisePool.length);
             return this._exercisePool[randomIndex];
         }
+
+        // static functions
+
+        public static
     }
