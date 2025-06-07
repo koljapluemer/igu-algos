@@ -1,4 +1,4 @@
-interface ExerciseTemplateData {
+export interface ExerciseTemplateData {
   id: string;
   belongsTo: string;
   instruction: string;

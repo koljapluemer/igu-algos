@@ -1,5 +1,13 @@
+interface LearningGoalData {
+    name: string;
+    isLesson: boolean;
+    data?: { [key: string]: unknown };
+    associatedLearningGoals?: string[];
+    blockedBy?: string[];
+}
+
 /**
- *
+ * Represents a learning goal or lesson that can be associated with exercises and other learning goals.
  */
 export class LearningGoal {
   public readonly id: string;
@@ -10,10 +18,7 @@ export class LearningGoal {
   public readonly data?: { [key: string]: unknown };
 
   /**
-   *
-   * @param id
-   * @param name
-   * @param isLesson
+   * Creates a new learning goal instance.
    */
   constructor(
     id: string,
@@ -28,37 +33,35 @@ export class LearningGoal {
   }
 
   /**
-   *
+   * Gets the list of learning goals associated with this goal.
    */
   get associatedLearningGoals(): LearningGoal[] | undefined {
     return this._associatedLearningGoals;
   }
 
   /**
-   *
+   * Gets the list of learning goals that block this goal.
    */
   get blockedBy(): LearningGoal[] | undefined {
     return this._blockedBy;
   }
 
   /**
-   *
-   * @param goals
+   * Sets the learning goals associated with this goal.
    */
   setAssociatedLearningGoals(goals: LearningGoal[]) {
     this._associatedLearningGoals = goals;
   }
 
   /**
-   *
-   * @param goals
+   * Sets the learning goals that block this goal.
    */
   setBlockedBy(goals: LearningGoal[]) {
     this._blockedBy = goals;
   }
 
   /**
-   *
+   * Creates multiple learning goals from a dictionary of configuration data.
    */
   public static makeLearningGoalsFromDataDict(dataDict: {
     [key: string]: unknown;
@@ -67,8 +70,9 @@ export class LearningGoal {
     const goalMap = new Map<string, LearningGoal>();
 
     // First pass: Create all learning goals
-    for (const [id, data] of Object.entries(dataDict)) {
+    for (const [id, rawData] of Object.entries(dataDict)) {
       try {
+        const data = rawData as LearningGoalData;
         const goal = new LearningGoal(id, data.name, data.isLesson, data.data);
 
         goals.push(goal);
@@ -79,9 +83,11 @@ export class LearningGoal {
     }
 
     // Second pass: Establish relationships
-    for (const [id, data] of Object.entries(dataDict)) {
+    for (const [id, rawData] of Object.entries(dataDict)) {
       const goal = goalMap.get(id);
       if (!goal) continue;
+
+      const data = rawData as LearningGoalData;
 
       // Handle associated learning goals
       if (data.associatedLearningGoals) {

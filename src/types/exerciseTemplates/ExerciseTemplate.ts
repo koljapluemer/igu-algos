@@ -4,8 +4,23 @@ import { GeneratorSingle } from "./generators/subclasses/GeneratorSingle";
 import { GeneratorVaryPropertyWholeNumberRange } from "./generators/subclasses/GeneratorVaryPropertyWholeNumberRange";
 import { StrategyByInstruction } from "./strategies/subclasses/StrategyByInstruction";
 
+interface TemplateData {
+    templateType: {
+        generator: {
+            name: string;
+            data: {
+                propertyToVary: string;
+                lowestVariationNumber: number;
+                highestVariationNumber: number;
+            };
+        };
+    };
+    belongsTo: LearningGoal;
+    data?: { [key: string]: unknown };
+}
+
 /**
- *
+ * Represents a template for generating exercises with specific learning goals and generation strategies.
  */
 export class ExerciseTemplate {
     public readonly id: string;
@@ -14,10 +29,11 @@ export class ExerciseTemplate {
     public readonly data?: { [key: string]: unknown };
 
     /**
-     *
-     * @param id
-     * @param belongsTo
-     * @param generator
+     * Creates a new exercise template with specified configuration.
+     * @param id - Unique identifier for the template
+     * @param belongsTo - The learning goal this template contributes to
+     * @param generator - The generator responsible for creating exercises from this template
+     * @param data - Optional data passed through
      */
     constructor(id: string, belongsTo: LearningGoal, generator: Generator, data?: { [key: string]: unknown }) {
         this.id = id;
@@ -27,13 +43,14 @@ export class ExerciseTemplate {
     }
 
     /**
-     *
+     * Creates multiple exercise templates from a dictionary of configuration data.
      */
     public static makeExerciseTemplatesFromDataDict(dataDict: { [key: string]: unknown }): ExerciseTemplate[] {
         const templates: ExerciseTemplate[] = [];
         
-        for (const [id, data] of Object.entries(dataDict)) {
+        for (const [id, rawData] of Object.entries(dataDict)) {
             try {
+                const data = rawData as TemplateData;
                 // Create strategy
                 const strategy = new StrategyByInstruction();
                 

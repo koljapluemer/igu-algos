@@ -1,63 +1,36 @@
 import { Exercise } from "./types/exerciseTemplates/strategies/Exercise";
-import { ExerciseTemplate } from "./types/exerciseTemplates/ExerciseTemplate";
-import { LearningGoal } from "./types/learningGoals/LearningGoal";
-import { GeneratorSingle } from "./types/exerciseTemplates/generators/subclasses/GeneratorSingle";
-import { GeneratorVaryPropertyWholeNumberRange } from "./types/exerciseTemplates/generators/subclasses/GeneratorVaryPropertyWholeNumberRange";
-import { StrategyByInstruction } from "./types/exerciseTemplates/strategies/subclasses/StrategyByInstruction";
+
+/**
+ * Main class for managing exercises and their scheduling.
+ */
+export class Igu {
+    private _exercisePool: Exercise[] = []
+
+    /** Current collection of exercises available for review */
+    get exercisePool() {
+        return this._exercisePool
+    }
+
+    /** Updates the entire collection of available exercises */
+    set exercisePool(exercises:Exercise[]) {
+        this._exercisePool = exercises
+    }  
 
     /**
-     *
+     * Adds new exercises to the exercise pool.
      */
-    export class Igu {
-
-        // props
-
-        private _exercisePool: Exercise[] = []
-    
-
-        // getters/setters
-    
-        /**
-         *
-         */
-        get exercisePool() {
-            return this._exercisePool
-        }
-    
-        /**
-         *
-         */
-        set exercisePool(exercises:Exercise[]) {
-            this._exercisePool = exercises
-        }  
-        
-        // private functions
-
-
-        // public functions
-
-        /**
-         *
-         * @param exercises
-         */
-        addExercises(exercises:Exercise[]) {
-            this.exercisePool.push(...exercises)
-        }
-
-        /**
-         *
-         */
-        getRandomDueExercise():Exercise | undefined {
-            if (this._exercisePool.length === 0) {
-                return undefined;
-            }
-            const randomIndex = Math.floor(Math.random() * this._exercisePool.length);
-            return this._exercisePool[randomIndex];
-        }
-
-        // static functions
-
-
-
-        
+    addExercises(exercises:Exercise[]) {
+        this.exercisePool.push(...exercises)
     }
+
+    /**
+     * Returns a random exercise that is due for review.
+     */
+    getRandomDueExercise():Exercise | undefined {
+        if (this._exercisePool.length === 0) {
+            return undefined;
+        }
+        const randomIndex = Math.floor(Math.random() * this._exercisePool.length);
+        return this._exercisePool[randomIndex];
+    }
+}

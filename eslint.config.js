@@ -3,6 +3,9 @@ import tseslint from 'typescript-eslint';
 import jsdocPlugin from 'eslint-plugin-jsdoc';
 
 export default [
+  {
+    ignores: ['dist/**'],
+  },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   {
@@ -11,7 +14,7 @@ export default [
     },
     rules: {
       'jsdoc/require-jsdoc': [
-        'warn',
+        'error',
         {
           require: {
             FunctionDeclaration: true,
@@ -21,10 +24,10 @@ export default [
           },
         },
       ],
-      'jsdoc/require-description': 'warn',
-      'jsdoc/require-param': 'warn',
-      'jsdoc/require-returns': 'warn',
-      'jsdoc/require-throws': 'warn',
+      'jsdoc/require-description': 'error',
+      'jsdoc/require-param': 'off',
+      'jsdoc/require-returns': 'off',
+      'jsdoc/require-throws': 'off',
     },
   },
 ];

@@ -3,20 +3,14 @@ import { Generator } from "../Generator";
 import { Strategy } from "../../strategies/Strategy";
 
 /**
- *
+ * Generator that creates exercises by varying a specific property within a whole number range.
  */
 export class GeneratorVaryPropertyWholeNumberRange extends Generator {
   public readonly propertyToVary: string;
   public readonly lowestVariationNumber: number;
   public readonly highestVariationNumber: number;
 
-  /**
-   *
-   * @param generationStrategy
-   * @param propertyToVary
-   * @param lowestVariationNumber
-   * @param highestVariationNumber
-   */
+  /** Creates a generator that varies a numeric property across a range of values */
   constructor(generationStrategy: Strategy, propertyToVary: string, lowestVariationNumber: number, highestVariationNumber: number) {
     super(generationStrategy);
     this.propertyToVary = propertyToVary;
@@ -24,18 +18,13 @@ export class GeneratorVaryPropertyWholeNumberRange extends Generator {
     this.highestVariationNumber = highestVariationNumber;
   }
 
-  /**
-   *
-   */
+  /** Generates exercises with the specified property varying across the defined range */
   generateExercices(): Exercise[] {
-    // do a bunch of times:
-    const exercise = this.generationStrategy.generateExercise();
+    // TODO: Implement exercise generation with property variation
     return [];
   }
 
-  /**
-   *
-   */
+  /** Returns the identifier for this generator type */
   getGeneratorName(): string {
     return "VARY_PROPERTY_WHOLE_NUMBER_RANGE";
   }
