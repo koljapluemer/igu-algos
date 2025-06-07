@@ -5,6 +5,9 @@ import { GeneratorSingle } from "./types/exerciseTemplates/generators/subclasses
 import { GeneratorVaryPropertyWholeNumberRange } from "./types/exerciseTemplates/generators/subclasses/GeneratorVaryPropertyWholeNumberRange";
 import { StrategyByInstruction } from "./types/exerciseTemplates/strategies/subclasses/StrategyByInstruction";
 
+    /**
+     *
+     */
     export class Igu {
 
         // props
@@ -14,10 +17,16 @@ import { StrategyByInstruction } from "./types/exerciseTemplates/strategies/subc
 
         // getters/setters
     
+        /**
+         *
+         */
         get exercisePool() {
             return this._exercisePool
         }
     
+        /**
+         *
+         */
         set exercisePool(exercises:Exercise[]) {
             this._exercisePool = exercises
         }  
@@ -27,10 +36,17 @@ import { StrategyByInstruction } from "./types/exerciseTemplates/strategies/subc
 
         // public functions
 
+        /**
+         *
+         * @param exercises
+         */
         addExercises(exercises:Exercise[]) {
             this.exercisePool.push(...exercises)
         }
 
+        /**
+         *
+         */
         getRandomDueExercise():Exercise | undefined {
             if (this._exercisePool.length === 0) {
                 return undefined;

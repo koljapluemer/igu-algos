@@ -1,3 +1,6 @@
+/**
+ *
+ */
 export class LearningGoal {
   public readonly id: string;
   public readonly name: string;
@@ -6,6 +9,12 @@ export class LearningGoal {
   private _blockedBy?: LearningGoal[];
   public readonly data?: { [key: string]: unknown };
 
+  /**
+   *
+   * @param id
+   * @param name
+   * @param isLesson
+   */
   constructor(
     id: string,
     name: string,
@@ -18,22 +27,39 @@ export class LearningGoal {
     this.data = data;
   }
 
+  /**
+   *
+   */
   get associatedLearningGoals(): LearningGoal[] | undefined {
     return this._associatedLearningGoals;
   }
 
+  /**
+   *
+   */
   get blockedBy(): LearningGoal[] | undefined {
     return this._blockedBy;
   }
 
+  /**
+   *
+   * @param goals
+   */
   setAssociatedLearningGoals(goals: LearningGoal[]) {
     this._associatedLearningGoals = goals;
   }
 
+  /**
+   *
+   * @param goals
+   */
   setBlockedBy(goals: LearningGoal[]) {
     this._blockedBy = goals;
   }
 
+  /**
+   *
+   */
   public static makeLearningGoalsFromDataDict(dataDict: {
     [key: string]: unknown;
   }): LearningGoal[] {

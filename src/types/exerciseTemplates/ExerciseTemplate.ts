@@ -4,12 +4,21 @@ import { GeneratorSingle } from "./generators/subclasses/GeneratorSingle";
 import { GeneratorVaryPropertyWholeNumberRange } from "./generators/subclasses/GeneratorVaryPropertyWholeNumberRange";
 import { StrategyByInstruction } from "./strategies/subclasses/StrategyByInstruction";
 
+/**
+ *
+ */
 export class ExerciseTemplate {
     public readonly id: string;
     public readonly belongsTo: LearningGoal;
     public readonly generator: Generator;
     public readonly data?: { [key: string]: unknown };
 
+    /**
+     *
+     * @param id
+     * @param belongsTo
+     * @param generator
+     */
     constructor(id: string, belongsTo: LearningGoal, generator: Generator, data?: { [key: string]: unknown }) {
         this.id = id;
         this.belongsTo = belongsTo;
@@ -17,6 +26,9 @@ export class ExerciseTemplate {
         this.data = data;
     }
 
+    /**
+     *
+     */
     public static makeExerciseTemplatesFromDataDict(dataDict: { [key: string]: unknown }): ExerciseTemplate[] {
         const templates: ExerciseTemplate[] = [];
         
