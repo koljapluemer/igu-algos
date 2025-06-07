@@ -34,7 +34,8 @@
     "verify": "npm run typecheck && npm run test && npm run build",
     "prepublishOnly": "npm run verify",
     "prepare": "husky",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "doc": "npx typedoc && mkdocs build"
   },
   "devDependencies": {
     "@eslint/js": "^9.28.0",

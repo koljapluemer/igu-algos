@@ -1,4 +1,4 @@
-# How to Document
+# How to Inline-Document 
 
 - each class, function, type etc. should have a one or two line doc-string description of what they do
 - this documentation should say something that is NOT already clear from the name of the class or function
