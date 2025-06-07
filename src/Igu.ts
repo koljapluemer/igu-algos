@@ -1,4 +1,4 @@
-import { Exercise } from "./types/exerciseTemplates/strategies/Exercise";
+import { Exercise } from "./exerciseTemplates/strategies/Exercise";
 
 /**
  * Main class for managing exercises and their scheduling.

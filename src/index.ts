@@ -1,5 +1,5 @@
 import { Igu } from './Igu';
-import { ExerciseTemplate } from './types/exerciseTemplates/ExerciseTemplate';
-import { LearningGoal } from './types/learningGoals/LearningGoal';
+import { ExerciseTemplate } from './exerciseTemplates/ExerciseTemplate';
+import { LearningGoal } from './learningGoals/LearningGoal';
 
 export { Igu, ExerciseTemplate, LearningGoal };
