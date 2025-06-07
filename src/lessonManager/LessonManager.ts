@@ -1,31 +1,6 @@
 import { LearningGoal } from "../learningGoals/LearningGoal";
 import { ExerciseTemplate } from "../exerciseTemplates/ExerciseTemplate";
-import { GeneratorVaryPropertyWholeNumberRange } from "../exerciseTemplates/generators/subclasses/GeneratorVaryPropertyWholeNumberRange";
-
-/**
- * Represents the data structure for a lesson, including its templates and metadata.
- */
-interface LessonData {
-    id: string;
-    name: string;
-    templates: { [key: string]: {
-        id: string;
-        belongsTo: string;
-        templateType: {
-            method: string;
-            generator: {
-                name: string;
-                data?: {
-                    propertyToVary?: string;
-                    lowestVariationNumber?: number;
-                    highestVariationNumber?: number;
-                };
-            };
-        };
-        data?: { [key: string]: unknown };
-    }};
-    data?: { [key: string]: unknown };
-}
+import { Lesson } from "./Lesson";
 
 /**
  * Converts learning goals and their associated templates into a structured lesson format,
@@ -38,8 +13,8 @@ export class LessonManager {
     public static generateLessons(
         learningGoals: LearningGoal[],
         exerciseTemplates: ExerciseTemplate[]
-    ): LessonData[] {
-        const lessons: LessonData[] = [];
+    ): Lesson[] {
+        const lessons: Lesson[] = [];
 
         // Filter only learning goals that are lessons
         const lessonGoals = learningGoals.filter(goal => goal.isLesson);
@@ -56,29 +31,12 @@ export class LessonManager {
 
         // Generate lesson data for each lesson goal
         lessonGoals.forEach(goal => {
-            const templateMap: LessonData['templates'] = {};
+            const templateMap: { [key: string]: ExerciseTemplate } = {};
             
             // Get templates for the main goal
             const mainTemplates = templatesByGoalId.get(goal.id) || [];
             mainTemplates.forEach(template => {
-                const generatorData = template.generator instanceof GeneratorVaryPropertyWholeNumberRange ? {
-                    propertyToVary: template.generator.propertyToVary,
-                    lowestVariationNumber: template.generator.lowestVariationNumber,
-                    highestVariationNumber: template.generator.highestVariationNumber
-                } : undefined;
-
-                templateMap[template.id] = {
-                    id: template.id,
-                    belongsTo: template.belongsTo.id,
-                    templateType: {
-                        method: template.generator.generationStrategy.getStrategyName(),
-                        generator: {
-                            name: template.generator.getGeneratorName(),
-                            data: generatorData
-                        }
-                    },
-                    data: template.data
-                };
+                templateMap[template.id] = template;
             });
 
             // Get templates for associated goals
@@ -87,36 +45,19 @@ export class LessonManager {
                     // Look up templates by the associated goal's ID
                     const associatedTemplates = templatesByGoalId.get(associatedGoal.id) || [];
                     associatedTemplates.forEach(template => {
-                        const generatorData = template.generator instanceof GeneratorVaryPropertyWholeNumberRange ? {
-                            propertyToVary: template.generator.propertyToVary,
-                            lowestVariationNumber: template.generator.lowestVariationNumber,
-                            highestVariationNumber: template.generator.highestVariationNumber
-                        } : undefined;
-
-                        templateMap[template.id] = {
-                            id: template.id,
-                            belongsTo: template.belongsTo.id,
-                            templateType: {
-                                method: template.generator.generationStrategy.getStrategyName(),
-                                generator: {
-                                    name: template.generator.getGeneratorName(),
-                                    data: generatorData
-                                }
-                            },
-                            data: template.data
-                        };
+                        templateMap[template.id] = template;
                     });
                 });
             }
 
-            const lessonData: LessonData = {
-                id: goal.id,
-                name: goal.name,
-                templates: templateMap,
-                data: goal.data
-            };
+            const lesson = new Lesson(
+                goal.id,
+                goal.name,
+                templateMap,
+                goal.data
+            );
 
-            lessons.push(lessonData);
+            lessons.push(lesson);
         });
 
         return lessons;

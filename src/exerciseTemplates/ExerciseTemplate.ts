@@ -3,6 +3,7 @@ import { Generator } from "./generators/Generator";
 import { GeneratorSingle } from "./generators/subclasses/GeneratorSingle";
 import { GeneratorVaryPropertyWholeNumberRange } from "./generators/subclasses/GeneratorVaryPropertyWholeNumberRange";
 import { StrategyByInstruction } from "./strategies/subclasses/StrategyByInstruction";
+import { Exercise } from "./strategies/Exercise";
 
 /**
  * A type for ExerciseTemplate data represented as JSON (for file storage) 
@@ -44,6 +45,13 @@ export class ExerciseTemplate {
         this.belongsTo = belongsTo;
         this.generator = generator;
         this.data = data;
+    }
+
+    /**
+     * Generates exercises using this template's generator.
+     */
+    public generateExercises(): Exercise[] {
+        return this.generator.generateExercices();
     }
 
     /**
