@@ -27,7 +27,7 @@ export class ExerciseTemplate {
                 
                 // Create generator based on type
                 let generator;
-                if (data.templateType.method === 'VARY_PROPERTY_WHOLE_NUMBER_RANGE') {
+                if (data.templateType.generator.name === GeneratorVaryPropertyWholeNumberRange.prototype.getGeneratorName()) {
                     const generatorData = data.templateType.generator.data;
                     generator = new GeneratorVaryPropertyWholeNumberRange(
                         strategy,
