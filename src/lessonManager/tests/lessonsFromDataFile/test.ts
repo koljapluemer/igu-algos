@@ -30,9 +30,6 @@ describe('LessonManager', () => {
         // Generate lessons
         const lessons = LessonManager.generateLessons(learningGoals, exerciseTemplates);
 
-        // Verify the results
-        console.log('Generated lessons:', JSON.stringify(lessons, null, 2));
-
         // Basic validation
         expect(lessons).toHaveLength(2);
 
