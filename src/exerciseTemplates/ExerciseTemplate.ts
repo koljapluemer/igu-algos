@@ -19,6 +19,7 @@ export interface ExerciseTemplateData {
         };
     };
     belongsTo: LearningGoal;
+    instruction: string;
     data?: { [key: string]: unknown };
 }
 
@@ -56,7 +57,12 @@ export class ExerciseTemplate {
         
         for (const [id, rawData] of Object.entries(dataDict)) {
             try {
-                const data = rawData as { templateType: ExerciseTemplateData['templateType'], belongsTo: string, data?: { [key: string]: unknown } };
+                const data = rawData as { 
+                    templateType: ExerciseTemplateData['templateType'], 
+                    belongsTo: string, 
+                    instruction: string,
+                    data?: { [key: string]: unknown } 
+                };
                 const learningGoal = learningGoals.get(data.belongsTo);
                 if (!learningGoal) {
                     console.warn(`Learning goal ${data.belongsTo} not found for template ${id}`);
@@ -64,7 +70,7 @@ export class ExerciseTemplate {
                 }
 
                 // Create strategy
-                const strategy = new StrategyByInstruction();
+                const strategy = new StrategyByInstruction(data.instruction);
                 
                 // Create generator based on type
                 let generator;
