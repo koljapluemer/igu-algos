@@ -9,3 +9,8 @@
 - [ExerciseTemplate](classes/ExerciseTemplate.md)
 - [Igu](classes/Igu.md)
 - [LearningGoal](classes/LearningGoal.md)
+
+## Interfaces
+
+- [ExerciseTemplateData](interfaces/ExerciseTemplateData.md)
+- [LearningGoalData](interfaces/LearningGoalData.md)

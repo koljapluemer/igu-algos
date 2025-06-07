@@ -1,5 +1,6 @@
 import { LearningGoal } from "../learningGoals/LearningGoal";
 import { ExerciseTemplate } from "../exerciseTemplates/ExerciseTemplate";
+import { GeneratorVaryPropertyWholeNumberRange } from "../exerciseTemplates/generators/subclasses/GeneratorVaryPropertyWholeNumberRange";
 
 /**
  * Represents the data structure for a lesson, including its templates and metadata.
@@ -7,7 +8,22 @@ import { ExerciseTemplate } from "../exerciseTemplates/ExerciseTemplate";
 interface LessonData {
     id: string;
     name: string;
-    templates: { [key: string]: ExerciseTemplate };
+    templates: { [key: string]: {
+        id: string;
+        belongsTo: string;
+        templateType: {
+            method: string;
+            generator: {
+                name: string;
+                data?: {
+                    propertyToVary?: string;
+                    lowestVariationNumber?: number;
+                    highestVariationNumber?: number;
+                };
+            };
+        };
+        data?: { [key: string]: unknown };
+    }};
     data?: { [key: string]: unknown };
 }
 
@@ -40,12 +56,29 @@ export class LessonManager {
 
         // Generate lesson data for each lesson goal
         lessonGoals.forEach(goal => {
-            const templateMap: { [key: string]: ExerciseTemplate } = {};
+            const templateMap: LessonData['templates'] = {};
             
             // Get templates for the main goal
             const mainTemplates = templatesByGoalId.get(goal.id) || [];
             mainTemplates.forEach(template => {
-                templateMap[template.id] = template;
+                const generatorData = template.generator instanceof GeneratorVaryPropertyWholeNumberRange ? {
+                    propertyToVary: template.generator.propertyToVary,
+                    lowestVariationNumber: template.generator.lowestVariationNumber,
+                    highestVariationNumber: template.generator.highestVariationNumber
+                } : undefined;
+
+                templateMap[template.id] = {
+                    id: template.id,
+                    belongsTo: template.belongsTo.id,
+                    templateType: {
+                        method: template.generator.generationStrategy.getStrategyName(),
+                        generator: {
+                            name: template.generator.getGeneratorName(),
+                            data: generatorData
+                        }
+                    },
+                    data: template.data
+                };
             });
 
             // Get templates for associated goals
@@ -54,7 +87,24 @@ export class LessonManager {
                     // Look up templates by the associated goal's ID
                     const associatedTemplates = templatesByGoalId.get(associatedGoal.id) || [];
                     associatedTemplates.forEach(template => {
-                        templateMap[template.id] = template;
+                        const generatorData = template.generator instanceof GeneratorVaryPropertyWholeNumberRange ? {
+                            propertyToVary: template.generator.propertyToVary,
+                            lowestVariationNumber: template.generator.lowestVariationNumber,
+                            highestVariationNumber: template.generator.highestVariationNumber
+                        } : undefined;
+
+                        templateMap[template.id] = {
+                            id: template.id,
+                            belongsTo: template.belongsTo.id,
+                            templateType: {
+                                method: template.generator.generationStrategy.getStrategyName(),
+                                generator: {
+                                    name: template.generator.getGeneratorName(),
+                                    data: generatorData
+                                }
+                            },
+                            data: template.data
+                        };
                     });
                 });
             }
