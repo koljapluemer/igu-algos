@@ -1,4 +1,4 @@
-interface LearningGoalData {
+export interface LearningGoalData {
     name: string;
     isLesson: boolean;
     data?: { [key: string]: unknown };

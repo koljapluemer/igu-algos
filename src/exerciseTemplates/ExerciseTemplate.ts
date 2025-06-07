@@ -4,7 +4,10 @@ import { GeneratorSingle } from "./generators/subclasses/GeneratorSingle";
 import { GeneratorVaryPropertyWholeNumberRange } from "./generators/subclasses/GeneratorVaryPropertyWholeNumberRange";
 import { StrategyByInstruction } from "./strategies/subclasses/StrategyByInstruction";
 
-interface TemplateData {
+/**
+ * A type for ExerciseTemplate data represented as JSON (for file storage) 
+ */
+export interface ExerciseTemplateData {
     templateType: {
         generator: {
             name: string;
@@ -53,7 +56,7 @@ export class ExerciseTemplate {
         
         for (const [id, rawData] of Object.entries(dataDict)) {
             try {
-                const data = rawData as { templateType: TemplateData['templateType'], belongsTo: string, data?: { [key: string]: unknown } };
+                const data = rawData as { templateType: ExerciseTemplateData['templateType'], belongsTo: string, data?: { [key: string]: unknown } };
                 const learningGoal = learningGoals.get(data.belongsTo);
                 if (!learningGoal) {
                     console.warn(`Learning goal ${data.belongsTo} not found for template ${id}`);
