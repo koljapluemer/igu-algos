@@ -1,10 +1,13 @@
 {
   "entryPoints": ["./src/index.ts"],
-  "out": "docs",
+  "out": "docs/reference",
   "name": "igu-algos",
   "excludePrivate": true,
   "excludeProtected": true,
-  "excludeExternals": true,
+  "excludeExternals": false,
   "includeVersion": true,
-  "theme": "default"
+  "theme": "default",
+  "plugin": ["typedoc-plugin-markdown"],
+  "readme": "none",
+  "disableSources": true
 } 
