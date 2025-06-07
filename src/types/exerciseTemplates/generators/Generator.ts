@@ -1,4 +1,4 @@
-import { Exercise } from "../../exercises/Exercise";
+import { Exercise } from "../strategies/Exercise";
 import { Strategy } from "../strategies/Strategy";
 
 export abstract class Generator {
@@ -9,4 +9,6 @@ export abstract class Generator {
     }
 
     public abstract generateExercices(): Exercise[];
+
+    public abstract getGeneratorName(): string;
 } 

@@ -1,4 +1,4 @@
-import { Exercise } from "../../../exercises/Exercise";
+import { Exercise } from "../../strategies/Exercise";
 import { Generator } from "../Generator";
 import { Strategy } from "../../strategies/Strategy";
 
@@ -18,5 +18,9 @@ export class GeneratorVaryPropertyWholeNumberRange extends Generator {
     // do a bunch of times:
     const exercise = this.generationStrategy.generateExercise();
     return [];
+  }
+
+  getGeneratorName(): string {
+    return "VARY_PROPERTY_WHOLE_NUMBER_RANGE";
   }
 }

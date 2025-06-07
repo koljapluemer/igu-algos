@@ -1,4 +1,4 @@
-import { Exercise } from "../../../exercises/Exercise";
+import { Exercise } from "../../strategies/Exercise";
 import { Generator } from "../Generator";
 import { Strategy } from "../../strategies/Strategy";
 
@@ -10,5 +10,9 @@ export class GeneratorSingle extends Generator {
     generateExercices(): Exercise[] {
         const exercise = this.generationStrategy.generateExercise();
         return [exercise];
+    }
+
+    getGeneratorName(): string {
+        return "SINGLE";
     }
 }
