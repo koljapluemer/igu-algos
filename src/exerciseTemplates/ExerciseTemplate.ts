@@ -45,12 +45,21 @@ export class ExerciseTemplate {
     /**
      * Creates multiple exercise templates from a dictionary of configuration data.
      */
-    public static makeExerciseTemplatesFromDataDict(dataDict: { [key: string]: unknown }): ExerciseTemplate[] {
+    public static makeExerciseTemplatesFromDataDict(
+        dataDict: { [key: string]: unknown },
+        learningGoals: Map<string, LearningGoal>
+    ): ExerciseTemplate[] {
         const templates: ExerciseTemplate[] = [];
         
         for (const [id, rawData] of Object.entries(dataDict)) {
             try {
-                const data = rawData as TemplateData;
+                const data = rawData as { templateType: TemplateData['templateType'], belongsTo: string, data?: { [key: string]: unknown } };
+                const learningGoal = learningGoals.get(data.belongsTo);
+                if (!learningGoal) {
+                    console.warn(`Learning goal ${data.belongsTo} not found for template ${id}`);
+                    continue;
+                }
+
                 // Create strategy
                 const strategy = new StrategyByInstruction();
                 
@@ -71,7 +80,7 @@ export class ExerciseTemplate {
                 // Create template
                 const template = new ExerciseTemplate(
                     id,
-                    data.belongsTo,
+                    learningGoal,
                     generator,
                     data.data
                 );

@@ -3,6 +3,7 @@ import { readFileSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { ExerciseTemplate } from '../../ExerciseTemplate';
+import { LearningGoal } from '../../../learningGoals/LearningGoal';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -12,8 +13,17 @@ describe('ExerciseTemplate Factory based on small file', () => {
         readFileSync(join(__dirname, 'exerciseTemplatesShort.json'), 'utf-8')
     );
 
+    const learningGoalsData = JSON.parse(
+        readFileSync(join(__dirname, 'learningGoalsShort.json'), 'utf-8')
+    );
+
     it('should create exercise templates with proper generators', () => {
-        const exerciseTemplates = ExerciseTemplate.makeExerciseTemplatesFromDataDict(exerciseTemplatesData);
+        // Create learning goals and map
+        const learningGoals = LearningGoal.makeLearningGoalsFromDataDict(learningGoalsData);
+        const learningGoalsMap = new Map<string, LearningGoal>();
+        learningGoals.forEach(goal => learningGoalsMap.set(goal.id, goal));
+
+        const exerciseTemplates = ExerciseTemplate.makeExerciseTemplatesFromDataDict(exerciseTemplatesData, learningGoalsMap);
         
         expect(exerciseTemplates).toHaveLength(4);
         
