@@ -8,16 +8,16 @@ export class ExerciseTemplate {
     public readonly id: string;
     public readonly belongsTo: LearningGoal;
     public readonly generator: Generator;
-    public readonly data?: { [key: string]: any };
+    public readonly data?: { [key: string]: unknown };
 
-    constructor(id: string, belongsTo: LearningGoal, generator: Generator, data?: { [key: string]: any }) {
+    constructor(id: string, belongsTo: LearningGoal, generator: Generator, data?: { [key: string]: unknown }) {
         this.id = id;
         this.belongsTo = belongsTo;
         this.generator = generator;
         this.data = data;
     }
 
-    public static makeExerciseTemplatesFromDataDict(dataDict: { [key: string]: any }): ExerciseTemplate[] {
+    public static makeExerciseTemplatesFromDataDict(dataDict: { [key: string]: unknown }): ExerciseTemplate[] {
         const templates: ExerciseTemplate[] = [];
         
         for (const [id, data] of Object.entries(dataDict)) {

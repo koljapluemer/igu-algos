@@ -4,6 +4,6 @@ export interface LearningGoalData {
   isLesson: boolean;
   associatedLearningGoals?: string[];
   blockedBy?: string[];
-  data?: { [key: string]: any };
+  data?: { [key: string]: unknown };
 }
 

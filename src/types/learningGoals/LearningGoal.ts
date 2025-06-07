@@ -4,13 +4,13 @@ export class LearningGoal {
   public readonly isLesson: boolean;
   private _associatedLearningGoals?: LearningGoal[];
   private _blockedBy?: LearningGoal[];
-  public readonly data?: { [key: string]: any };
+  public readonly data?: { [key: string]: unknown };
 
   constructor(
     id: string,
     name: string,
     isLesson: boolean,
-    data?: { [key: string]: any }
+    data?: { [key: string]: unknown }
   ) {
     this.id = id;
     this.name = name;
@@ -35,7 +35,7 @@ export class LearningGoal {
   }
 
   public static makeLearningGoalsFromDataDict(dataDict: {
-    [key: string]: any;
+    [key: string]: unknown;
   }): LearningGoal[] {
     const goals: LearningGoal[] = [];
     const goalMap = new Map<string, LearningGoal>();

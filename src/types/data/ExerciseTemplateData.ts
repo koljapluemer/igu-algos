@@ -17,5 +17,5 @@ interface ExerciseTemplateData {
       };
     };
   };
-  data?: { [key: string]: any };
+  data?: { [key: string]: unknown };
 }

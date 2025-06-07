@@ -4,7 +4,7 @@ import { Exercise } from "../Exercise";
 import { Strategy } from "../Strategy";
 
 export class StrategyByInstruction implements Strategy {
-    generateExercise(data?: { [key: string]: any; }): Exercise {
+    generateExercise(data?: { [key: string]: unknown; }): Exercise {
         return new Exercise()
     }
 
