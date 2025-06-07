@@ -42,7 +42,11 @@
                                 <ul class="dropdown-menu">
                                     
 <li>
-    <a href="../../development/how-to-document/" class="dropdown-item">How to Document</a>
+    <a href="../../development/how-to-build-documentation/" class="dropdown-item">How to Build Documentation</a>
+</li>
+                                    
+<li>
+    <a href="../../development/how-to-inline-document/" class="dropdown-item">How to Inline-Document</a>
 </li>
                                 </ul>
                             </li>
@@ -86,6 +90,20 @@
             
 <li>
     <a href="../../reference/classes/LearningGoal/" class="dropdown-item">LearningGoal</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Interfaces</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../reference/interfaces/ExerciseTemplateData/" class="dropdown-item">ExerciseTemplateData</a>
+</li>
+            
+<li>
+    <a href="../../reference/interfaces/LearningGoalData/" class="dropdown-item">LearningGoalData</a>
 </li>
     </ul>
   </li>
@@ -135,12 +153,121 @@
     
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="2"><a href="#how-to-create-lessons-from-json-data-files" class="nav-link">How to Create Lessons from JSON data files</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-</div>
+<h2 id="how-to-create-lessons-from-json-data-files">How to Create <code>Lesson</code>s from JSON data files</h2>
+<h3 id="assumptions">Assumptions</h3>
+<ol>
+<li>You have learning goals represented in a well-structured JSON, such as this:</li>
+</ol>
+<pre><code class="language-JSON">{
+  &quot;pitcairn-is.-main&quot;: {
+    &quot;name&quot;: &quot;Know where Pitcairn Is. is&quot;,
+    &quot;isLesson&quot;: true,
+    &quot;associatedLearningGoals&quot;: [
+      &quot;pitcairn-is.-1&quot;
+    ],
+    &quot;data&quot;: {
+      &quot;country&quot;: &quot;Pitcairn Is.&quot;
+    }
+  },
+  &quot;pitcairn-is.-1&quot;: {
+    &quot;name&quot;: &quot;Find Pitcairn Is. on the worldmap&quot;,
+    &quot;isLesson&quot;: false,
+    &quot;data&quot;: {
+      &quot;country&quot;: &quot;Pitcairn Is.&quot;
+    }
+  },
+  &quot;barbados-main&quot;: {
+    &quot;name&quot;: &quot;Know where Barbados is&quot;,
+    &quot;isLesson&quot;: true,
+    &quot;associatedLearningGoals&quot;: [
+      &quot;barbados-1&quot;,
+      &quot;barbados-2&quot;,
+      &quot;barbados-3&quot;
+    ],
+    &quot;data&quot;: {
+      &quot;country&quot;: &quot;Barbados&quot;
+    }
+  },
+  &quot;barbados-1&quot;: {
+    &quot;name&quot;: &quot;Find Barbados on the worldmap&quot;,
+    &quot;isLesson&quot;: false,
+    &quot;data&quot;: {
+      &quot;country&quot;: &quot;Barbados&quot;
+    }
+  }
+}
+
+</code></pre>
+<ol>
+<li>You have exercise templates represented in a well-structured JSON which looks like this:</li>
+</ol>
+<pre><code class="language-JSON">{
+  &quot;pitcairn-is.-1&quot;: {
+    &quot;belongsTo&quot;: &quot;pitcairn-is.-1&quot;,
+    &quot;instruction&quot;: &quot;$task_pre Pitcairn Is. $task_post&quot;,
+    &quot;templateType&quot;: {
+      &quot;method&quot;: &quot;BY_INSTRUCTION&quot;,
+      &quot;generator&quot;: {
+        &quot;name&quot;: &quot;SINGLE&quot;
+      }
+    },
+    &quot;data&quot;: {
+      &quot;zoom&quot;: 100
+    }
+  },
+  &quot;barbados-1&quot;: {
+    &quot;belongsTo&quot;: &quot;barbados-1&quot;,
+    &quot;instruction&quot;: &quot;$task_pre Barbados $task_post&quot;,
+    &quot;templateType&quot;: {
+      &quot;method&quot;: &quot;BY_INSTRUCTION&quot;,
+      &quot;generator&quot;: {
+        &quot;name&quot;: &quot;SINGLE&quot;
+      }
+    },
+    &quot;data&quot;: {
+      &quot;zoom&quot;: 100
+    }
+  },
+  &quot;barbados-2&quot;: {
+    &quot;belongsTo&quot;: &quot;barbados-2&quot;,
+    &quot;instruction&quot;: &quot;$task_pre Barbados $task_post&quot;,
+    &quot;templateType&quot;: {
+      &quot;method&quot;: &quot;BY_INSTRUCTION&quot;,
+      &quot;generator&quot;: {
+        &quot;name&quot;: &quot;VARY_PROPERTY_WHOLE_NUMBER_RANGE&quot;,
+        &quot;data&quot;: {
+          &quot;propertyToVary&quot;: &quot;panField&quot;,
+          &quot;lowestVariationNumber&quot;: 0,
+          &quot;highestVariationNumber&quot;: 8
+        }
+      }
+    },
+    &quot;data&quot;: {
+      &quot;zoom&quot;: 102
+    }
+  }
+}
+
+</code></pre>
+<h3 id="process">Process</h3>
+<ol>
+<li>Load the two files from whereever you need to load them<ul>
+<li>Use the interfaces <code>ExerciseTemplateData</code> and <code>LearningGoalData</code></li>
+</ul>
+</li>
+<li>Use <code>LearningGoal.makeLearningGoalsFromDataDict()</code> and <code>ExerciseTemplate.makeExerciseTemplatesFromDataDict()</code> to create the respective object arrays, <code>LearningGoal[]</code> and <code>ExerciseTemplate[]</code></li>
+<li>Use <code>LessonManager.generateLessons()</code> (passing in both arrays) to generate the actual lesson data </li>
+</ol></div>
             </div>
         </div>
 
