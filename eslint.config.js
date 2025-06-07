@@ -4,7 +4,7 @@ import jsdocPlugin from 'eslint-plugin-jsdoc';
 
 export default [
   {
-    ignores: ['dist/**'],
+    ignores: ['dist/**', 'docs/**', 'doc/**'],
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
