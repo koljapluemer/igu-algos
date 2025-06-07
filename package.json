@@ -35,6 +35,7 @@
     "prepublishOnly": "npm run verify"
   },
   "devDependencies": {
+    "@types/node": "^22.15.30",
     "rimraf": "^6.0.1",
     "tsup": "^8.3.6",
     "typescript": "^5.7.3",

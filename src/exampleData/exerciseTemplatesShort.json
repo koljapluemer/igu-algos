@@ -1,0 +1,64 @@
+{
+  "pitcairn-is.-1": {
+    "belongsTo": "pitcairn-is.-1",
+    "instruction": "$task_pre Pitcairn Is. $task_post",
+    "templateType": {
+      "method": "BY_INSTRUCTION",
+      "generator": {
+        "name": "SINGLE"
+      }
+    },
+    "data": {
+      "zoom": 100
+    }
+  },
+  "barbados-1": {
+    "belongsTo": "barbados-1",
+    "instruction": "$task_pre Barbados $task_post",
+    "templateType": {
+      "method": "BY_INSTRUCTION",
+      "generator": {
+        "name": "SINGLE"
+      }
+    },
+    "data": {
+      "zoom": 100
+    }
+  },
+  "barbados-2": {
+    "belongsTo": "barbados-2",
+    "instruction": "$task_pre Barbados $task_post",
+    "templateType": {
+      "method": "BY_INSTRUCTION",
+      "generator": {
+        "name": "VARY_PROPERTY_WHOLE_NUMBER_RANGE",
+        "data": {
+          "propertyToVary": "panField",
+          "lowestVariationNumber": 0,
+          "highestVariationNumber": 8
+        }
+      }
+    },
+    "data": {
+      "zoom": 102
+    }
+  },
+  "barbados-3": {
+    "belongsTo": "barbados-3",
+    "instruction": "$task_pre Barbados $task_post",
+    "templateType": {
+      "method": "BY_INSTRUCTION",
+      "generator": {
+        "name": "VARY_PROPERTY_WHOLE_NUMBER_RANGE",
+        "data": {
+          "propertyToVary": "panField",
+          "lowestVariationNumber": 0,
+          "highestVariationNumber": 8
+        }
+      }
+    },
+    "data": {
+      "zoom": 104
+    }
+  }
+}

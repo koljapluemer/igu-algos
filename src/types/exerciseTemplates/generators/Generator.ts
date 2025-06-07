@@ -2,7 +2,11 @@ import { Exercise } from "../../exercises/Exercise";
 import { Strategy } from "../strategies/Strategy";
 
 export abstract class Generator {
-    public readonly generationStrategy: Strategy
+    public readonly generationStrategy: Strategy;
 
-    public abstract generateExercices():Exercise[]
+    constructor(generationStrategy: Strategy) {
+        this.generationStrategy = generationStrategy;
+    }
+
+    public abstract generateExercices(): Exercise[];
 } 
