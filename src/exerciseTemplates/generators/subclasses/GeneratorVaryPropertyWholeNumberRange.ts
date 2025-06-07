@@ -20,8 +20,16 @@ export class GeneratorVaryPropertyWholeNumberRange extends Generator {
 
   /** Generates exercises with the specified property varying across the defined range */
   generateExercices(): Exercise[] {
-    // TODO: Implement exercise generation with property variation
-    return [];
+    const exercises: Exercise[] = [];
+    
+    for (let value = this.lowestVariationNumber; value <= this.highestVariationNumber; value++) {
+      // Create a new data object for each exercise with the varied property
+      const exerciseData = { [this.propertyToVary]: value };
+      const exercise = this.generationStrategy.generateExercise(exerciseData);
+      exercises.push(exercise);
+    }
+
+    return exercises;
   }
 
   /** Returns the identifier for this generator type */

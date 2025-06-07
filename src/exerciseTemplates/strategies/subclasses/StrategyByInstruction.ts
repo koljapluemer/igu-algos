@@ -7,13 +7,25 @@ import { Strategy } from "../Strategy";
  * Strategy that generates exercises based on predefined instructions.
  */
 export class StrategyByInstruction implements Strategy {
+    private readonly instruction: string;
+
+    /**
+     * Creates a new strategy with the specified instruction.
+     * @param instruction - The instruction to use for generated exercises
+     */
+    constructor(instruction: string) {
+        this.instruction = instruction;
+    }
+
     /**
      * Generates a new exercise based on the strategy's instructions.
+     * @param data - Optional data to be passed through to the exercise
      */
     generateExercise(data?: { [key: string]: unknown; }): Exercise {
-        console.log("Generating exercise with data:", data);
-        // TODO: Implement actual exercise generation using _data
-        return new Exercise();
+        return {
+            instruction: this.instruction,
+            data: data || {}
+        };
     }
 
     /**
