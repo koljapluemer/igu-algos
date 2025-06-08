@@ -62,7 +62,7 @@
   "dependencies": {
     "@types/ajv": "^0.0.5",
     "ajv": "^8.17.1",
-    "igu-schemas": "git+https://github.com/koljapluemer/igu-schemas.git#v2.0.1",
+    "igu-schemas": "git+https://github.com/koljapluemer/igu-schemas.git#v2.0.5",
     "ts-fsrs": "^5.0.1"
   }
 }

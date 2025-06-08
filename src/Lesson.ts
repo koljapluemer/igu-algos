@@ -2,7 +2,7 @@ import Ajv from 'ajv';
 import { lessonsSchema } from './types';
 import { ExerciseTemplate } from './ExerciseTemplate';
 import type { JSONSchemaType } from 'ajv';
-import type { Lessons } from './types';
+import type { SchemaData, ExerciseTemplateData } from 'igu-schemas/types';
 
 /**
  * Handles lesson data and template dependencies, automatically resolving blockedBy relationships between templates
@@ -22,16 +22,16 @@ export class Lesson {
       validateSchema: false,
       allErrors: true
     });
-    const validate = ajv.compile(lessonsSchema as unknown as JSONSchemaType<Lessons>);
+    const validate = ajv.compile(lessonsSchema as unknown as JSONSchemaType<SchemaData>);
     
     if (!validate([data])) {
       throw new Error(`Invalid lesson data: ${JSON.stringify(validate.errors)}`);
     }
 
-    const lesson = data as { id: string; name: string; templates: unknown[] };
+    const lesson = data as SchemaData[number];
     this.id = lesson.id;
     this.name = lesson.name;
-    this._templates = lesson.templates.map(template => new ExerciseTemplate(template));
+    this._templates = lesson.templates.map((template: ExerciseTemplateData) => new ExerciseTemplate(template));
     this._resolveTemplateDependencies();
   }
 
@@ -71,13 +71,13 @@ export class Lesson {
       validateSchema: false,
       allErrors: true
     });
-    const validate = ajv.compile(lessonsSchema as unknown as JSONSchemaType<Lessons>);
+    const validate = ajv.compile(lessonsSchema as unknown as JSONSchemaType<SchemaData>);
     
     if (!validate(json)) {
       throw new Error(`Invalid lesson data: ${JSON.stringify(validate.errors)}`);
     }
 
-    const lessons = json as Lessons;
+    const lessons = json as SchemaData;
     if (lessons.length === 0) {
       throw new Error('No lessons found in data');
     }
@@ -94,13 +94,13 @@ export class Lesson {
       validateSchema: false,
       allErrors: true
     });
-    const validate = ajv.compile(lessonsSchema as unknown as JSONSchemaType<Lessons>);
+    const validate = ajv.compile(lessonsSchema as unknown as JSONSchemaType<SchemaData>);
     
     if (!validate(json)) {
       throw new Error(`Invalid lessons data: ${JSON.stringify(validate.errors)}`);
     }
 
-    const lessons = json as Lessons;
-    return lessons.map(lessonData => new Lesson(lessonData));
+    const lessons = json as SchemaData;
+    return lessons.map((lessonData: SchemaData[number]) => new Lesson(lessonData));
   }
 }

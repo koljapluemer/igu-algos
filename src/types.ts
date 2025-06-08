@@ -1,17 +1,19 @@
 import schemaJson from 'igu-schemas/schema.json';
+import type { 
+  SchemaData, 
+  LessonData, 
+  ExerciseTemplateData, 
+  ExerciseType, 
+  Generator 
+} from 'igu-schemas/types';
 
-export type ExerciseTypeName = 'BY_INSTRUCTION';
-export type GeneratorName = 'SINGLE' | 'VARY_PROPERTY_WHOLE_NUMBER_RANGE';
-
-export interface ExerciseType {
-  name: ExerciseTypeName;
-  data?: Record<string, unknown>;
-}
-
-export interface Generator {
-  name: GeneratorName;
-  data?: Record<string, unknown>;
-}
+export type {
+  SchemaData,
+  LessonData,
+  ExerciseTemplateData,
+  ExerciseType,
+  Generator
+};
 
 // Import schema from igu-schemas for runtime validation
 export const lessonsSchema = schemaJson;

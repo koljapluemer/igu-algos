@@ -1,7 +1,7 @@
 import Ajv from 'ajv';
 import { lessonsSchema } from './types';
 import type { JSONSchemaType } from 'ajv';
-import type { ExerciseType, Generator } from './types';
+import type { ExerciseTemplateData, ExerciseType, Generator } from 'igu-schemas/types';
 
 /**
  * Manages exercise templates and their dependencies, resolving blockedBy relationships into actual template references
@@ -38,14 +38,7 @@ export class ExerciseTemplate {
       throw new Error(`Invalid template data: ${JSON.stringify(validate.errors)}`);
     }
 
-    const template = data as {
-      id: string;
-      instruction: string;
-      exerciseType: ExerciseType;
-      generator: Generator;
-      data?: Record<string, unknown>;
-      blockedBy?: string[];
-    };
+    const template = data as ExerciseTemplateData;
 
     this.id = template.id;
     this.instruction = template.instruction;
