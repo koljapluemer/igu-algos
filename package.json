@@ -58,6 +58,7 @@
     "node": "^20.0.0 || >=22.0.0"
   },
   "dependencies": {
-    "ts-fsrs": "^5.0.1"
+    "ts-fsrs": "^5.0.1",
+    "igu-schemas": "git+https://github.com/koljapluemer/igu-schemas.git#v1.0.1"
   }
 }
