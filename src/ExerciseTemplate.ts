@@ -2,6 +2,7 @@ import Ajv from 'ajv';
 import { lessonsSchema } from './types';
 import type { JSONSchemaType } from 'ajv';
 import type { ExerciseTemplateData, ExerciseType, Generator } from 'igu-schemas/types';
+import type { Exercise } from './types';
 
 /**
  * Manages exercise templates and their dependencies, resolving blockedBy relationships into actual template references
@@ -83,5 +84,40 @@ export class ExerciseTemplate {
       data: this.data,
       blockedBy: this._blockedBy
     };
+  }
+
+  /**
+   * Generates exercises based on the template's generator configuration
+   * @returns Array of generated exercises
+   */
+  public generateExercises(): Exercise[] {
+    if (this.generator.name === 'SINGLE') {
+      return [{
+        instruction: this.instruction,
+        data: this.data
+      }];
+    }
+
+    if (this.generator.name === 'VARY_PROPERTY_WHOLE_NUMBER_RANGE') {
+      const { propertyToVary, lowestVariationNumber, highestVariationNumber } = this.generator.data || {};
+      
+      if (!propertyToVary || typeof lowestVariationNumber !== 'number' || typeof highestVariationNumber !== 'number') {
+        throw new Error('VARY_PROPERTY_WHOLE_NUMBER_RANGE generator requires propertyToVary, lowestVariationNumber, and highestVariationNumber in its data');
+      }
+
+      const exercises: Exercise[] = [];
+      for (let i = lowestVariationNumber; i <= highestVariationNumber; i++) {
+        exercises.push({
+          instruction: this.instruction,
+          data: {
+            ...this.data,
+            [propertyToVary as string]: i
+          }
+        });
+      }
+      return exercises;
+    }
+
+    throw new Error(`Unsupported generator type: ${this.generator.name}`);
   }
 }

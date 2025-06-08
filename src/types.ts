@@ -15,6 +15,12 @@ export type {
   Generator
 };
 
+
+export type Exercise = {
+    instruction: string;
+    data?: Record<string, unknown>;
+}
+
 // Import schema from igu-schemas for runtime validation
 export const lessonsSchema = schemaJson;
 
