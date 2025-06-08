@@ -1,9 +1,12 @@
-import { ExerciseTemplate as IExerciseTemplate, ExerciseType, Generator } from './types';
+import Ajv from 'ajv';
+import { lessonsSchema } from './types';
+import type { JSONSchemaType } from 'ajv';
+import type { ExerciseType, Generator } from './types';
 
 /**
  * Manages exercise templates and their dependencies, resolving blockedBy relationships into actual template references
  */
-export class ExerciseTemplate implements IExerciseTemplate {
+export class ExerciseTemplate {
   public id: string;
   public instruction: string;
   public exerciseType: ExerciseType;
@@ -16,13 +19,40 @@ export class ExerciseTemplate implements IExerciseTemplate {
    * Creates a new ExerciseTemplate instance
    * @param data - The template data
    */
-  constructor(data: IExerciseTemplate) {
-    this.id = data.id;
-    this.instruction = data.instruction;
-    this.exerciseType = data.exerciseType;
-    this.generator = data.generator;
-    this.data = data.data;
-    this._blockedBy = data.blockedBy;
+  constructor(data: unknown) {
+    const ajv = new Ajv({
+      strict: false,
+      validateSchema: false,
+      allErrors: true
+    });
+    const validate = ajv.compile(lessonsSchema as unknown as JSONSchemaType<unknown[]>);
+    
+    // Create a minimal lesson object to validate against the schema
+    const lesson = {
+      id: 'temp',
+      name: 'temp',
+      templates: [data]
+    };
+    
+    if (!validate([lesson])) {
+      throw new Error(`Invalid template data: ${JSON.stringify(validate.errors)}`);
+    }
+
+    const template = data as {
+      id: string;
+      instruction: string;
+      exerciseType: ExerciseType;
+      generator: Generator;
+      data?: Record<string, unknown>;
+      blockedBy?: string[];
+    };
+
+    this.id = template.id;
+    this.instruction = template.instruction;
+    this.exerciseType = template.exerciseType;
+    this.generator = template.generator;
+    this.data = template.data;
+    this._blockedBy = template.blockedBy;
   }
 
   /**
@@ -51,7 +81,7 @@ export class ExerciseTemplate implements IExerciseTemplate {
   /**
    * Serializes the template back to its JSON representation, preserving the original structure
    */
-  public toJSON(): IExerciseTemplate {
+  public toJSON(): unknown {
     return {
       id: this.id,
       instruction: this.instruction,

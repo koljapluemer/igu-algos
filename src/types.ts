@@ -1,8 +1,7 @@
-import type { ExerciseType as GeneratedExerciseType, Generator as GeneratedGenerator } from './generated-types';
 import schemaJson from 'igu-schemas/schema.json';
 
-export type ExerciseTypeName = GeneratedExerciseType['name'];
-export type GeneratorName = GeneratedGenerator['name'];
+export type ExerciseTypeName = 'BY_INSTRUCTION';
+export type GeneratorName = 'SINGLE' | 'VARY_PROPERTY_WHOLE_NUMBER_RANGE';
 
 export interface ExerciseType {
   name: ExerciseTypeName;
@@ -14,22 +13,8 @@ export interface Generator {
   data?: Record<string, unknown>;
 }
 
-export interface ExerciseTemplate {
-  id: string;
-  instruction: string;
-  exerciseType: ExerciseType;
-  generator: Generator;
-  data?: Record<string, unknown>;
-  blockedBy?: string[];
-}
-
-export interface Lesson {
-  id: string;
-  name: string;
-  templates: ExerciseTemplate[];
-}
-
-export type Lessons = Lesson[];
-
 // Import schema from igu-schemas for runtime validation
-export const lessonsSchema = schemaJson as unknown;
+export const lessonsSchema = schemaJson;
+
+// Export the schema type for use in classes
+export type Lessons = unknown[];

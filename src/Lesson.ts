@@ -1,12 +1,13 @@
 import Ajv from 'ajv';
-import { Lesson as ILesson, Lessons, lessonsSchema } from './types';
+import { lessonsSchema } from './types';
 import { ExerciseTemplate } from './ExerciseTemplate';
 import type { JSONSchemaType } from 'ajv';
+import type { Lessons } from './types';
 
 /**
  * Handles lesson data and template dependencies, automatically resolving blockedBy relationships between templates
  */
-export class Lesson implements ILesson {
+export class Lesson {
   public id: string;
   public name: string;
   private _templates: ExerciseTemplate[] = [];
@@ -15,10 +16,22 @@ export class Lesson implements ILesson {
    * Creates a new Lesson instance
    * @param data - The lesson data
    */
-  constructor(data: ILesson) {
-    this.id = data.id;
-    this.name = data.name;
-    this._templates = data.templates.map(template => new ExerciseTemplate(template));
+  constructor(data: unknown) {
+    const ajv = new Ajv({
+      strict: false,
+      validateSchema: false,
+      allErrors: true
+    });
+    const validate = ajv.compile(lessonsSchema as unknown as JSONSchemaType<Lessons>);
+    
+    if (!validate([data])) {
+      throw new Error(`Invalid lesson data: ${JSON.stringify(validate.errors)}`);
+    }
+
+    const lesson = data as { id: string; name: string; templates: unknown[] };
+    this.id = lesson.id;
+    this.name = lesson.name;
+    this._templates = lesson.templates.map(template => new ExerciseTemplate(template));
     this._resolveTemplateDependencies();
   }
 
@@ -41,7 +54,7 @@ export class Lesson implements ILesson {
   /**
    * Serializes the lesson back to its JSON representation, preserving the original structure
    */
-  public toJSON(): ILesson {
+  public toJSON(): unknown {
     return {
       id: this.id,
       name: this.name,
@@ -58,7 +71,7 @@ export class Lesson implements ILesson {
       validateSchema: false,
       allErrors: true
     });
-    const validate = ajv.compile(lessonsSchema as JSONSchemaType<Lessons>);
+    const validate = ajv.compile(lessonsSchema as unknown as JSONSchemaType<Lessons>);
     
     if (!validate(json)) {
       throw new Error(`Invalid lesson data: ${JSON.stringify(validate.errors)}`);
@@ -81,7 +94,7 @@ export class Lesson implements ILesson {
       validateSchema: false,
       allErrors: true
     });
-    const validate = ajv.compile(lessonsSchema as JSONSchemaType<Lessons>);
+    const validate = ajv.compile(lessonsSchema as unknown as JSONSchemaType<Lessons>);
     
     if (!validate(json)) {
       throw new Error(`Invalid lessons data: ${JSON.stringify(validate.errors)}`);
