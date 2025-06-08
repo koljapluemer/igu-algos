@@ -1,7 +1,8 @@
-import { JSONSchemaType } from 'ajv';
+import type { ExerciseType as GeneratedExerciseType, Generator as GeneratedGenerator } from './generated-types';
+import schemaJson from 'igu-schemas/schema.json';
 
-export type ExerciseTypeName = 'BY_INSTRUCTION';
-export type GeneratorName = 'SINGLE' | 'VARY_PROPERTY_WHOLE_NUMBER_RANGE';
+export type ExerciseTypeName = GeneratedExerciseType['name'];
+export type GeneratorName = GeneratedGenerator['name'];
 
 export interface ExerciseType {
   name: ExerciseTypeName;
@@ -30,53 +31,5 @@ export interface Lesson {
 
 export type Lessons = Lesson[];
 
-// Schema for validation
-export const lessonsSchema: JSONSchemaType<Lessons> = {
-  type: 'array',
-  minItems: 1,
-  items: {
-    type: 'object',
-    required: ['id', 'name', 'templates'],
-    properties: {
-      id: { type: 'string' },
-      name: { type: 'string' },
-      templates: {
-        type: 'array',
-        minItems: 1,
-        items: {
-          type: 'object',
-          required: ['id', 'instruction', 'exerciseType', 'generator'],
-          properties: {
-            id: { type: 'string' },
-            instruction: { type: 'string' },
-            exerciseType: {
-              type: 'object',
-              required: ['name'],
-              properties: {
-                name: { type: 'string', enum: ['BY_INSTRUCTION'] },
-                data: { type: 'object', nullable: true }
-              }
-            },
-            generator: {
-              type: 'object',
-              required: ['name'],
-              properties: {
-                name: { 
-                  type: 'string', 
-                  enum: ['SINGLE', 'VARY_PROPERTY_WHOLE_NUMBER_RANGE'] 
-                },
-                data: { type: 'object', nullable: true }
-              }
-            },
-            data: { type: 'object', nullable: true },
-            blockedBy: { 
-              type: 'array', 
-              items: { type: 'string' },
-              nullable: true
-            }
-          }
-        }
-      }
-    }
-  }
-};
+// Import schema from igu-schemas for runtime validation
+export const lessonsSchema = schemaJson as unknown;

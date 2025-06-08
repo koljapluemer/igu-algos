@@ -1,6 +1,7 @@
 import Ajv from 'ajv';
 import { Lesson as ILesson, Lessons, lessonsSchema } from './types';
 import { ExerciseTemplate } from './ExerciseTemplate';
+import type { JSONSchemaType } from 'ajv';
 
 /**
  * Handles lesson data and template dependencies, automatically resolving blockedBy relationships between templates
@@ -52,8 +53,12 @@ export class Lesson implements ILesson {
    * Creates a Lesson instance from JSON data, validating against the schema and throwing on invalid data
    */
   public static fromJSON(json: unknown): Lesson {
-    const ajv = new Ajv();
-    const validate = ajv.compile(lessonsSchema);
+    const ajv = new Ajv({
+      strict: false,
+      validateSchema: false,
+      allErrors: true
+    });
+    const validate = ajv.compile(lessonsSchema as JSONSchemaType<Lessons>);
     
     if (!validate(json)) {
       throw new Error(`Invalid lesson data: ${JSON.stringify(validate.errors)}`);
@@ -71,8 +76,12 @@ export class Lesson implements ILesson {
    * Creates multiple Lesson instances from JSON data, validating against the schema and throwing on invalid data
    */
   public static fromJSONArray(json: unknown): Lesson[] {
-    const ajv = new Ajv();
-    const validate = ajv.compile(lessonsSchema);
+    const ajv = new Ajv({
+      strict: false,
+      validateSchema: false,
+      allErrors: true
+    });
+    const validate = ajv.compile(lessonsSchema as JSONSchemaType<Lessons>);
     
     if (!validate(json)) {
       throw new Error(`Invalid lessons data: ${JSON.stringify(validate.errors)}`);
