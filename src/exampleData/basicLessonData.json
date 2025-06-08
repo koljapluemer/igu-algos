@@ -1,0 +1,39 @@
+{
+  "id": "a",
+  "name": "Know where Barbados is",
+  "templates": [
+     {
+      "id": "t1",
+      "instruction": "$task_pre Barbados $task_post",
+      "exerciseType": {
+        "name": "BY_INSTRUCTION",
+        "data": {}
+      },
+      "generator": {
+        "name": "SINGLE"
+      },
+      "data": {
+        "zoom": 100
+      }
+    },
+    {
+      "id": "t2",
+      "instruction": "$task_pre Barbados $task_post",
+      "exerciseType": {
+        "name": "BY_INSTRUCTION"
+      },
+      "generator": {
+        "name": "VARY_PROPERTY_WHOLE_NUMBER_RANGE",
+        "data": {
+          "propertyToVary": "panField",
+          "lowestVariationNumber": 0,
+          "highestVariationNumber": 8
+        }
+      },
+      "data": {
+        "zoom": 102
+      },
+      "blockedBy": ["t1"]
+    }
+  ]
+}
