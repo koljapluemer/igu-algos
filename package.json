@@ -2,7 +2,7 @@
   "name": "igu-algos",
   "version": "0.0.1",
   "description": "A bunch of learning algos",
-  "author": "koljapluemer <github@koljapluemer.com>",
+  "author": "Kolja Sam Pluemer",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",
