@@ -2,7 +2,7 @@ import { ExerciseData } from "../types/ExerciseData";
 import { LearningGoalData } from "../types/LearningGoalData";
 import { Exercise } from "./Exercise";
 import { LearningGoal } from "./LearningGoal";
-import { FSRS, Rating, createEmptyCard, Card, RecordLog } from "ts-fsrs";
+import { FSRS, createEmptyCard, Card, RecordLog } from "ts-fsrs";
 import { LearningEventFSRS } from "../types/LearningEvent";
 
 /**

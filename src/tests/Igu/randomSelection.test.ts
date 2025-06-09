@@ -31,6 +31,9 @@ describe('Igu > random selection', () => {
     it('should not select the same exercise twice in a row', () => {
         // Arrange
         const igu = new Igu()
+        const learningGoalsData: LearningGoalData[] = [
+            { id: 'lg1', name: 'Learning Goal 1' }
+        ]
         const emptyCard = createEmptyCard()
         const exercisesData: ExerciseData[] = [
             { 
@@ -58,19 +61,19 @@ describe('Igu > random selection', () => {
                 }
             }
         ]
-        igu.addData([], exercisesData)
+        igu.addData(learningGoalsData, exercisesData)
 
         // Act & Assert
-        const first = igu.getRandomExercise()
+        const first = igu.getRandomExerciseWithLearningGoal()
         expect(first).toBeDefined()
         
-        const second = igu.getRandomExercise()
+        const second = igu.getRandomExerciseWithLearningGoal()
         expect(second).toBeDefined()
-        expect(second?._id).not.toBe(first?._id)
+        expect(second?.exercise._id).not.toBe(first?.exercise._id)
 
-        const third = igu.getRandomExercise()
+        const third = igu.getRandomExerciseWithLearningGoal()
         expect(third).toBeDefined()
-        expect(third?._id).not.toBe(second?._id)
+        expect(third?.exercise._id).not.toBe(second?.exercise._id)
     })
 
     it('should not select the same exercise twice in a row when getting from learning goal', () => {
@@ -148,11 +151,11 @@ describe('Igu > random selection', () => {
         expect(second).toBeDefined()
         expect(second?.id).toBe(first?.id)
 
-        const firstEx = igu.getRandomExercise()
+        const firstEx = igu.getRandomExerciseWithLearningGoal()
         expect(firstEx).toBeDefined()
         
-        const secondEx = igu.getRandomExercise()
+        const secondEx = igu.getRandomExerciseWithLearningGoal()
         expect(secondEx).toBeDefined()
-        expect(secondEx?._id).toBe(firstEx?._id)
+        expect(secondEx?.exercise._id).toBe(firstEx?.exercise._id)
     })
 }) 
