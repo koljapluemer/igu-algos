@@ -1,3 +1,5 @@
+import { ExerciseData } from "../types/ExerciseData";
+import { LearningGoalData } from "../types/LearningGoalData";
 import { Exercise } from "./Exercise";
 import { LearningGoal } from "./LearningGoal";
 
@@ -19,6 +21,19 @@ export class Igu {
     constructor() {
         this._learningGoals = []
         this._exercises = []
+    }
+
+    /**
+     * Create a basic instance by passing in all the data
+     */
+    public addData(learningGoals: LearningGoalData[], exercises: ExerciseData[]): void {
+        // First create all learning goals
+        const learningGoalInstances = learningGoals.map(data => LearningGoal.createFromLearningGoalData(data))
+        this.setLearningGoals(learningGoalInstances)
+
+        // Then create exercises using the learning goal instances
+        const exerciseInstances = exercises.map(data => Exercise.makeFromExerciseData(data, learningGoalInstances))
+        this.setExercises(exerciseInstances)
     }
 
     /**
