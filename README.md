@@ -2,6 +2,8 @@
 
 An opinionated collection of classes, types, utils and algos I use to build learning applications.
 
+Very much Work In Progress. See the full documentation [here](https://koljapluemer.github.io/igu-algos/).
+
 ## Usage Guide
 
 The `Igu` class is the main entry point for building learning applications. Here's how to use it:
