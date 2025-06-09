@@ -149,6 +149,20 @@ export class Igu {
     }
 
     /**
+     * Return a random exercise and the learning goal it is associated with
+     */
+    public getRandomExerciseWithLearningGoal(): { exercise: Exercise, learningGoal: LearningGoal } | undefined {
+        const exercise = this.getRandomExercise()
+        if (!exercise || exercise._learningGoals.length === 0) return undefined
+
+        // Randomly select one of the exercise's learning goals
+        const randomIndex = Math.floor(Math.random() * exercise._learningGoals.length)
+        const learningGoal = exercise._learningGoals[randomIndex]
+
+        return { exercise, learningGoal }
+    }
+
+    /**
      * Returns a random exercise associated with a specific learning goal, avoiding the last selected one
      */
     public getRandomExerciseFromLearningGoalID(learningGoalId: string): Exercise | undefined {
