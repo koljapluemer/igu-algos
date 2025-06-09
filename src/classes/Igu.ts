@@ -105,28 +105,70 @@ export class Igu {
     }
 
     /**
-     * Returns a random learning goal from the collection
+     * Returns a random learning goal from the collection, avoiding the last selected one
      */
     public getRandomLearningGoal(): LearningGoal | undefined {
         if (this._learningGoals.length === 0) return undefined
-        return this._learningGoals[Math.floor(Math.random() * this._learningGoals.length)]
+        
+        // If we have only one learning goal, return it
+        if (this._learningGoals.length === 1) {
+            this._lastSelectedLearningGoal = this._learningGoals[0]
+            return this._learningGoals[0]
+        }
+
+        // Filter out the last selected goal if it exists
+        const availableGoals = this._learningGoals.filter(
+            goal => goal.id !== this._lastSelectedLearningGoal?.id
+        )
+        
+        const selectedGoal = availableGoals[Math.floor(Math.random() * availableGoals.length)]
+        this._lastSelectedLearningGoal = selectedGoal
+        return selectedGoal
     }
 
     /**
-     * Returns a random exercise from the collection
+     * Returns a random exercise from the collection, avoiding the last selected one
      */
     public getRandomExercise(): Exercise | undefined {
         if (this._exercises.length === 0) return undefined
-        return this._exercises[Math.floor(Math.random() * this._exercises.length)]
+
+        // If we have only one exercise, return it
+        if (this._exercises.length === 1) {
+            this._lastSelectedExercise = this._exercises[0]
+            return this._exercises[0]
+        }
+
+        // Filter out the last selected exercise if it exists
+        const availableExercises = this._exercises.filter(
+            exercise => exercise._id !== this._lastSelectedExercise?._id
+        )
+        
+        const selectedExercise = availableExercises[Math.floor(Math.random() * availableExercises.length)]
+        this._lastSelectedExercise = selectedExercise
+        return selectedExercise
     }
 
     /**
-     * Returns a random exercise associated with a specific learning goal
+     * Returns a random exercise associated with a specific learning goal, avoiding the last selected one
      */
     public getRandomExerciseFromLearningGoalID(learningGoalId: string): Exercise | undefined {
         const exercises = this.getChildrenExercisesForLearningGoalID(learningGoalId)
         if (exercises.length === 0) return undefined
-        return exercises[Math.floor(Math.random() * exercises.length)]
+
+        // If we have only one exercise, return it
+        if (exercises.length === 1) {
+            this._lastSelectedExercise = exercises[0]
+            return exercises[0]
+        }
+
+        // Filter out the last selected exercise if it exists
+        const availableExercises = exercises.filter(
+            exercise => exercise._id !== this._lastSelectedExercise?._id
+        )
+        
+        const selectedExercise = availableExercises[Math.floor(Math.random() * availableExercises.length)]
+        this._lastSelectedExercise = selectedExercise
+        return selectedExercise
     }
 
     /**
