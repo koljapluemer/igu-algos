@@ -49,14 +49,14 @@ export class Igu {
     /**
      * Replaces the entire exercise collection
      */
-    public setExercises(exercises: Exercise[]): void {
+    private setExercises(exercises: Exercise[]): void {
         this._exercises = exercises
     }
 
     /**
      * Adds a single exercise to the collection
      */
-    public addExercise(exercise: Exercise): void {
+    private addExercise(exercise: Exercise): void {
         this._exercises.push(exercise)
     }
 
@@ -70,14 +70,14 @@ export class Igu {
     /**
      * Replaces the entire learning goals collection
      */
-    public setLearningGoals(goals: LearningGoal[]): void {
+    private setLearningGoals(goals: LearningGoal[]): void {
         this._learningGoals = goals
     }
 
     /**
      * Adds a single learning goal to the collection
      */
-    public addLearningGoal(goal: LearningGoal): void {
+    private addLearningGoal(goal: LearningGoal): void {
         this._learningGoals.push(goal)
     }
 
@@ -129,7 +129,7 @@ export class Igu {
     /**
      * Returns a random exercise from the collection, avoiding the last selected one
      */
-    public getRandomExercise(): Exercise | undefined {
+    private getRandomExercise(): Exercise | undefined {
         if (this._exercises.length === 0) return undefined
 
         // If we have only one exercise, return it
