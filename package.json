@@ -1,7 +1,7 @@
 {
   "name": "igu-algos",
-  "version": "0.0.1",
-  "description": "A bunch of learning algos",
+  "version": "1.0.0",
+  "description": "An opinionated collection of classes, types, utils and algos I use to build learning applications.",
   "author": "Kolja Sam Pluemer",
   "license": "MIT",
   "type": "module",

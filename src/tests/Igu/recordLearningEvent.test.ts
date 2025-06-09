@@ -3,6 +3,7 @@ import { Igu } from '../../classes/Igu'
 import { LearningGoalData } from '../../types/LearningGoalData'
 import { ExerciseData } from '../../types/ExerciseData'
 import { Rating, createEmptyCard } from 'ts-fsrs'
+import { LearningEventFSRS } from '../../types/LearningEvent'
 
 describe('Igu > recordLearningEvent', () => {
     it('should update exercise learning data when recording a learning event', () => {
@@ -34,7 +35,11 @@ describe('Igu > recordLearningEvent', () => {
         igu.addData(learningGoalsData, exercisesData)
 
         // Act
-        const updatedExercise = igu.recordLearningEvent('ex1', Rating.Good)
+        const event: LearningEventFSRS = {
+            timestamp: new Date(),
+            fsrsRating: Rating.Good
+        }
+        const updatedExercise = igu.recordLearningEvent('ex1', event)
 
         // Assert
         expect(updatedExercise).toBeDefined()
@@ -52,7 +57,11 @@ describe('Igu > recordLearningEvent', () => {
         const igu = new Igu()
 
         // Act
-        const result = igu.recordLearningEvent('non-existent', Rating.Good)
+        const event: LearningEventFSRS = {
+            timestamp: new Date(),
+            fsrsRating: Rating.Good
+        }
+        const result = igu.recordLearningEvent('non-existent', event)
 
         // Assert
         expect(result).toBeUndefined()
@@ -79,7 +88,11 @@ describe('Igu > recordLearningEvent', () => {
         igu.addData(learningGoalsData, exercisesData)
 
         // Act
-        const updatedExercise = igu.recordLearningEvent('ex1', Rating.Good)
+        const event: LearningEventFSRS = {
+            timestamp: new Date(),
+            fsrsRating: Rating.Good
+        }
+        const updatedExercise = igu.recordLearningEvent('ex1', event)
 
         // Assert
         expect(updatedExercise).toBeDefined()

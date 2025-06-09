@@ -3,6 +3,7 @@ import { Igu } from '../../classes/Igu'
 import { LearningGoalData } from '../../types/LearningGoalData'
 import { ExerciseData } from '../../types/ExerciseData'
 import { Rating, createEmptyCard } from 'ts-fsrs'
+import { LearningEventFSRS } from '../../types/LearningEvent'
 
 describe('Igu > README Example', () => {
     it('should work as shown in the README', () => {
@@ -62,7 +63,11 @@ describe('Igu > README Example', () => {
         expect(['ex1', 'ex2']).toContain(exercise?._id)
 
         // Step 3: Record Learning Progress
-        const updatedExercise = igu.recordLearningEvent('ex1', Rating.Good)
+        const event: LearningEventFSRS = {
+            timestamp: new Date(),
+            fsrsRating: Rating.Good
+        }
+        const updatedExercise = igu.recordLearningEvent('ex1', event)
         expect(updatedExercise).toBeDefined()
         expect(updatedExercise?._id).toBe('ex1')
         expect(updatedExercise?._learningData).toBeDefined()

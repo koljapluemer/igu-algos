@@ -3,6 +3,7 @@ import { LearningGoalData } from "../types/LearningGoalData";
 import { Exercise } from "./Exercise";
 import { LearningGoal } from "./LearningGoal";
 import { FSRS, Rating, createEmptyCard, Card, RecordLog } from "ts-fsrs";
+import { LearningEventFSRS } from "../types/LearningEvent";
 
 /**
  * The "meta object" of the library, essentially a mediator
@@ -188,10 +189,10 @@ export class Igu {
     /**
      * Records a learning event for an exercise and updates its learning data
      * @param exerciseId - The ID of the exercise to record the event for
-     * @param rating - The rating given by the user (Again, Hard, Good, Easy)
+     * @param event - The learning event containing the rating and timestamp
      * @returns The updated exercise, or undefined if the exercise wasn't found
      */
-    public recordLearningEvent(exerciseId: string, rating: Rating): Exercise | undefined {
+    public recordLearningEvent(exerciseId: string, event: LearningEventFSRS): Exercise | undefined {
         const exercise = this.getExerciseByID(exerciseId)
         if (!exercise || !exercise._learningData) return undefined
 
@@ -205,8 +206,8 @@ export class Igu {
         }
 
         // Get the scheduling cards for this rating
-        const schedulingCards: RecordLog = this._fsrs.repeat(exercise._learningData as Card, new Date())
-        const result = schedulingCards[rating as keyof RecordLog]
+        const schedulingCards: RecordLog = this._fsrs.repeat(exercise._learningData as Card, event.timestamp)
+        const result = schedulingCards[event.fsrsRating as keyof RecordLog]
 
         if (!result) return undefined
 
