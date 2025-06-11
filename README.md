@@ -4,6 +4,10 @@ An opinionated collection of classes, types, utils and algos I use to build lear
 
 Very much Work In Progress. See the full documentation [here](https://koljapluemer.github.io/igu-algos/).
 
+## Capabilities
+
+Types and base classes are now fine-ish. Should work for calling and getting random exercises.
+
 ## Usage Guide
 
 The `Igu` class is the main entry point for building learning applications. Here's how to use it:
