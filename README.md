@@ -1,3 +1,6 @@
+> [!NOTE]  
+> *Archived Prototype. I will try to abstract learning apps into higher level components when I build 10 more of them.*
+
 # Igu Algos
 
 An opinionated collection of classes, types, utils and algos I use to build learning applications.
